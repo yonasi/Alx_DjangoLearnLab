@@ -6,6 +6,7 @@ from django.views.generic import DetailView
 from django.views.generic.detail import DetailView
 from .models import Book
 from .models import Library
+from django.http import HttpResponse
 
 def list_books(request):
     books = Book.objects.all()
@@ -31,16 +32,21 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('list_books') 
+                return redirect('list_books')
             else:
                 form.add_error(None, "Invalid username or password")
     else:
         form = AuthenticationForm()
     return render(request, 'relationship_app/login.html', {'form': form})
+    
+
+
 
 def user_logout(request):
     logout(request)
-    return redirect('list_books') 
+    form = AuthenticationForm()
+    return render(request, 'relationship_app/logout.html', {'form': form})
+
 
 def user_register(request):
     if request.method == 'POST':
@@ -52,3 +58,5 @@ def user_register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
+
+    
