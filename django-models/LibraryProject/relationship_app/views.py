@@ -5,7 +5,7 @@ from .models import Library
 
 def list_all_books(request):
 
-    books = Book.objects.select_related('author').all()
+    books = Book.objects.all()
     
     
     book_list = []
