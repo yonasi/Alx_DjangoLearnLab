@@ -4,7 +4,7 @@ from .models import Book, Library
 
 def book_list(request):
     books = Book.objects.all()
-    return render(request, 'relationship_app/list_book.html', {'books': books})  # Using template
+    return render(request, 'relationship_app/list_books.html', {'books': books})  # Using template
 
 # Class-based view
 class LibraryDetailView(DetailView):
