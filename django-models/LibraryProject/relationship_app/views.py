@@ -1,6 +1,7 @@
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.views.generic import DetailView
 from django.views.generic.detail import DetailView
