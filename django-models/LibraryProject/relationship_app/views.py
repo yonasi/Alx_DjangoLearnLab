@@ -1,11 +1,13 @@
 from . models import Library
 from . models import Book
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic import DetailView
 from .models import UserProfile
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
+from django.http import HttpResponseBadRequest
 
 
 def list_books(request):
@@ -51,10 +53,24 @@ def is_admin(user):
 
 
 def is_librarian(user):
-    return user.UserProfile.role == 'Librarian'
+
+    if user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=user) 
+            return user_profile.role == 'Librarian' 
+        except UserProfile.DoesNotExist:
+            return False 
+    return False
 
 def is_member(user):
-    return user.UserProfile.role == 'Member'
+
+    if user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=user) 
+            return user_profile.role == 'Member' 
+        except UserProfile.DoesNotExist:
+            return False 
+    return False
 
 
 @user_passes_test(is_admin, login_url='/login/') 
@@ -65,15 +81,65 @@ def admin_view(request):
     }
     return render(request, 'admin_view.html', context)
 
-@user_passes_test(is_librarian)
-def librarian_view(request):
-    return render(request, 'librarian_view.html')
+user_passes_test(is_librarian, login_url='/login/') 
+def admin_view(request):
+    
+    context = {
+        'message': "Welcome to the librarian view!"
+    }
+    return render(request, 'librarian_view.html', context)
 
-@user_passes_test(is_member)
-def member_view(request):
-    return render(request, 'member_view.html')
+user_passes_test(is_member, login_url='/login/') 
+def admin_view(request):
+    
+    context = {
+        'message': "Welcome to the member view!"
+    }
+    return render(request, 'member_view.html', context)
 
 
+
+@permission_required('relationship_app.can_add_book')
+def add_book(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+
+        if not title or not author:
+            return HttpResponseBadRequest("Missing title or author")
+
+        Book.objects.create(title=title, author=author)
+        return redirect('list_books') 
+
+    return render(request, 'book_add.html') 
+
+
+@permission_required('relationship_app.can_change_book')
+def edit_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+
+        if not title or not author:
+            return HttpResponseBadRequest("Missing title or author")
+
+        book.title = title
+        book.author = author
+        book.save()
+        return redirect('book_detail', pk=book.pk)
+
+    return render(request, 'book_edit.html', {'book': book}) 
+
+
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('list_books')
+    return render(request, 'book_confirm_delete.html', {'book': book})
 
 
 
