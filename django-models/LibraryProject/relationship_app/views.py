@@ -40,7 +40,14 @@ def register(request):
 
 
 def is_admin(user):
-    return user.UserProfile.role == 'Admin'
+
+    if user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=user) 
+            return user_profile.role == 'Admin' 
+        except UserProfile.DoesNotExist:
+            return False 
+    return False
 
 
 def is_librarian(user):
@@ -50,9 +57,13 @@ def is_member(user):
     return user.UserProfile.role == 'Member'
 
 
-@user_passes_test(is_admin)
+@user_passes_test(is_admin, login_url='/login/') 
 def admin_view(request):
-    return render(request, 'admin_view.html')
+    
+    context = {
+        'message': "Welcome to the admin view!"
+    }
+    return render(request, 'admin_view.html', context)
 
 @user_passes_test(is_librarian)
 def librarian_view(request):
