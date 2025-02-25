@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Member Profile</h1>
-<p>Username: {{ member_profile.user.username }}</p>
-<p>Phone: {{ member_profile.phone_number }}</p>
-<p>Address: {{ member_profile.address }}</p>
-<a href="{% url 'edit_admin_profile' %}">Edit Profile</a>
+<h1>Member UserProfile</h1>
+<p>Username: {{ member_UserProfile.user.username }}</p>
+<p>Phone: {{ member_UserProfile.phone_number }}</p>
+<p>Address: {{ member_UserProfile.address }}</p>
+<a href="{% url 'edit_admin_UserProfile' %}">Edit UserProfile</a>
 {% endblock %}

@@ -1,17 +1,17 @@
 from django import forms
-from .models import AdminProfile, LibrarianProfile, MemberProfile
+from .models import AdminUserProfile, LibrarianUserProfile, MemberUserProfile
 
-class AdminProfileForm(forms.ModelForm):
+class AdminUserProfileForm(forms.ModelForm):
     class Meta:
-        model = AdminProfile
+        model = AdminUserProfile
         fields = ['phone_number', 'address']
 
-class LibrarianProfileForm(forms.ModelForm):
+class LibrarianUserProfileForm(forms.ModelForm):
     class Meta:
-        model = LibrarianProfile
+        model = LibrarianUserProfile
         fields = ['phone_number', 'address', 'hire_date']
 
-class MemberProfileForm(forms.ModelForm):
+class MemberUserProfileForm(forms.ModelForm):
     class Meta:
-        model = MemberProfile
+        model = MemberUserProfile
         fields = ['phone_number', 'address', 'membership_id', 'date_of_birth']

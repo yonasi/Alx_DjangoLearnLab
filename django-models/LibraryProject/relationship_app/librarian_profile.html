@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Librarian Profile</h1>
-<p>Username: {{ librarian_profile.user.username }}</p>
-<p>Phone: {{ librarian_profile.phone_number }}</p>
-<p>Address: {{ librarian_profile.address }}</p>
-<a href="{% url 'edit_librarian_profile' %}">Edit Profile</a>
+<h1>Librarian UserProfile</h1>
+<p>Username: {{ librarian_UserProfile.user.username }}</p>
+<p>Phone: {{ librarian_UserProfile.phone_number }}</p>
+<p>Address: {{ librarian_UserProfile.address }}</p>
+<a href="{% url 'edit_librarian_UserProfile' %}">Edit UserProfile</a>
 {% endblock %}

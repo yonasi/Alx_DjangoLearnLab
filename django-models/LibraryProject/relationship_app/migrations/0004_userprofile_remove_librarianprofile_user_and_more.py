@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('auth', '0012_alter_user_first_name_max_length'),
-        ('relationship_app', '0003_adminprofile_librarianprofile_memberprofile'),
+        ('relationship_app', '0003_adminUserProfile_librarianUserProfile_memberUserProfile'),
     ]
 
     operations = [
@@ -21,20 +21,20 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RemoveField(
-            model_name='librarianprofile',
+            model_name='librarianUserProfile',
             name='user',
         ),
         migrations.RemoveField(
-            model_name='memberprofile',
+            model_name='memberUserProfile',
             name='user',
         ),
         migrations.DeleteModel(
-            name='AdminProfile',
+            name='AdminUserProfile',
         ),
         migrations.DeleteModel(
-            name='LibrarianProfile',
+            name='LibrarianUserProfile',
         ),
         migrations.DeleteModel(
-            name='MemberProfile',
+            name='MemberUserProfile',
         ),
     ]

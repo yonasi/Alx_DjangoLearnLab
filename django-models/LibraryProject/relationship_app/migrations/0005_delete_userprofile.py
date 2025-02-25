@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('relationship_app', '0004_userprofile_remove_librarianprofile_user_and_more'),
+        ('relationship_app', '0004_UserProfile_remove_librarianUserProfile_user_and_more'),
     ]
 
     operations = [
