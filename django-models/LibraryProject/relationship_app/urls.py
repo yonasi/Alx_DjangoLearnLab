@@ -8,8 +8,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('books/', views.list_books, name='list_books'),
     path('libraries/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
-    path('Admin/', views.Admin, name='Admin'),
-    path('Librarian/', views.Librarian, name='Librarian'),
-    path('Member/', views.Member, name='Member'),     
+    path('Admin/', views.admin_view, name='Admin'),
+    path('Librarian/', views.librarian_view, name='Librarian'),
+    path('Member/', views.member_view, name='Member'),     
 ]
     
