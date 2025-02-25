@@ -60,7 +60,7 @@ def Librarian(request):
     return render(request, 'librarian_view.html')
 
 @user_passes_test(is_member)
-def Memberd(request):
+def Member(request):
     return render(request, 'member_view.html')
 
 
