@@ -74,7 +74,7 @@ def is_member(user):
 
 
 @user_passes_test(is_admin, login_url='/login/') 
-def admin_view(request):
+def Admin(request):
     
     context = {
         'message': "Welcome to the admin view!"
@@ -82,7 +82,7 @@ def admin_view(request):
     return render(request, 'admin_view.html', context)
 
 user_passes_test(is_librarian, login_url='/login/') 
-def admin_view(request):
+def Librarian(request):
     
     context = {
         'message': "Welcome to the librarian view!"
@@ -90,7 +90,7 @@ def admin_view(request):
     return render(request, 'librarian_view.html', context)
 
 user_passes_test(is_member, login_url='/login/') 
-def admin_view(request):
+def Member(request):
     
     context = {
         'message': "Welcome to the member view!"
