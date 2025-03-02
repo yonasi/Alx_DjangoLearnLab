@@ -79,29 +79,35 @@ def Member(request):
 
 
 
-@user_passes_test(is_admin, login_url='/login/') 
-def Admin(request):
+class RoleRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     
-    context = {
-        'message': "Welcome to the admin view!"
-    }
-    return render(request, 'admin_view.html', context)
 
-user_passes_test(is_librarian, login_url='/login/') 
-def Librarian(request):
-    
-    context = {
-        'message': "Welcome to the librarian view!"
-    }
-    return render(request, 'librarian_view.html', context)
+    role = None
 
-user_passes_test(is_member, login_url='/login/') 
-def Member(request):
-    
-    context = {
-        'message': "Welcome to the member view!"
-    }
-    return render(request, 'member_view.html', context)
+    def test_func(self):
+        try:
+            return self.request.user.userprofile.role == self.role
+        except UserProfile.DoesNotExist:
+            return False
+
+class AdminView(RoleRequiredMixin, View):
+    role = 'Admin'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'admin_page.html')
+
+class LibrarianView(RoleRequiredMixin, View):
+    role = 'Librarian'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'librarian_page.html')
+
+class MemberView(RoleRequiredMixin, View):
+    role = 'Member'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'member_page.html')
+
 
 
 
