@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Form</title>
+</head>
+<body>
+    <form method="post"> 
+        {% csrf_token %}   <!--The {% csrf_token %} template tag adds a hidden input field containing -->
+        {{ form.as_p }}    <!--the CSRF token to your form. Django validates this token when the form is submitted.--> 
+        <button type="submit">Save</button>
+    </form>
+    <h1>Book Form</h1>
+    <a href="{% url 'book_list' %}">Cancel</a>
+</body>
+</html>

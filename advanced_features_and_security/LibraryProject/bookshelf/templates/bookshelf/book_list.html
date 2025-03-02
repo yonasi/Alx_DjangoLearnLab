@@ -4,7 +4,13 @@
     <title>Book List</title>
 </head>
 <body>
+    
     <h1>Book List</h1>
+    <form method="post">
+        {% csrf_token %}    <!--The {% csrf_token %} template tag adds a hidden input field containing -->
+        {{ form.as_p }}      <!--the CSRF token to your form. Django validates this token when the form is submitted.-->
+        <button type="submit">Submit</button>
+    </form>
     {% if user.has_perm 'bookshelf.can_create' %}
     <a href="{% url 'book_create' %}">Add Book</a>
     {% endif %}
