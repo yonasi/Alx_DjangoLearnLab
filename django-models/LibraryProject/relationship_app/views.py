@@ -4,10 +4,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic import DetailView
-from .models import UserProfile
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import UserProfile
 
 
 def list_books(request):
@@ -40,37 +41,42 @@ def register(request):
     
 
 
-
 def is_admin(user):
-
-    if user.is_authenticated:
-        try:
-            user_profile = UserProfile.objects.get(user=user) 
-            return user_profile.role == 'Admin' 
-        except UserProfile.DoesNotExist:
-            return False 
-    return False
-
+    try:
+        return user.userprofile.role == 'Admin'
+    except UserProfile.DoesNotExist:
+        return False
 
 def is_librarian(user):
-
-    if user.is_authenticated:
-        try:
-            user_profile = UserProfile.objects.get(user=user) 
-            return user_profile.role == 'Librarian' 
-        except UserProfile.DoesNotExist:
-            return False 
-    return False
+    try:
+        return user.userprofile.role == 'Librarian'
+    except UserProfile.DoesNotExist:
+        return False
 
 def is_member(user):
+    try:
+        return user.userprofile.role == 'Member'
+    except UserProfile.DoesNotExist:
+        return False
 
-    if user.is_authenticated:
-        try:
-            user_profile = UserProfile.objects.get(user=user) 
-            return user_profile.role == 'Member' 
-        except UserProfile.DoesNotExist:
-            return False 
-    return False
+
+
+@login_required
+@user_passes_test(is_admin)
+def admi(request):
+    return render(request, 'admin_view.html')
+
+@login_required
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'librarian_view.html')
+
+@login_required
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'member_view.html')
+
+
 
 
 @user_passes_test(is_admin, login_url='/login/') 
