@@ -16,12 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from relationship_app import views
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', auth_views.LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
-    path('bookshelf', include('bookshelf.urls')),
-    path('relationship/', include('relationship_app.urls')),
+    path('books', include('bookshelf.urls')),
+    path('', include('bookshelf.urls')),
 ]

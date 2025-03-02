@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<h1>Admin UserProfile</h1>
-<p>Username: {{ admin_UserProfile.user.username }}</p>
-<p>Phone: {{ admin_UserProfile.phone_number }}</p>
-<p>Address: {{ admin_UserProfile.address }}</p>
-<a href="{% url 'edit_admin_UserProfile' %}">Edit UserProfile</a>
-{% endblock %}
