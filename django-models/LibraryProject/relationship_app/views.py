@@ -59,23 +59,20 @@ def is_member(user):
     except UserProfile.DoesNotExist:
         return False
 
-
-
-@login_required
+#Admin view
 @user_passes_test(is_admin)
-def Admin(request):
-    return render(request, 'admin_view.html')
+def admin_view(request):
+    return render(request, 'admin_view.html', {'message': 'Welcome, Admin!'})
 
-@login_required
+#Librarian view
 @user_passes_test(is_librarian)
-def Librarian(request):
-    return render(request, 'librarian_view.html')
+def librarian_view(request):
+    return render(request, 'librarian_view.html', {'message': 'Welcome, Librarian!'})
 
-@login_required
+#Member view
 @user_passes_test(is_member)
-def Member(request):
-    return render(request, 'member_view.html')
-
+def member_view(request):
+    return render(request, 'member_view.html', {'message': 'Welcome, Member!'})
 
 
 
