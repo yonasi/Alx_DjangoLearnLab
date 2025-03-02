@@ -60,18 +60,24 @@ def is_member(user):
         return False
 
 #Admin view
-@user_passes_test(is_admin)
-def Admin(request):
+def admin_view(request):
+    if not request.user.is_authenticated or request.user.userprofile.role != 'admin':
+        return HttpResponseForbidden("You do not have permission to access this page.")
     return render(request, 'admin_view.html', {'message': 'Welcome, Admin!'})
 
 #Librarian view
-@user_passes_test(is_librarian)
-def Librarian(request):
+from django.shortcuts import render
+from django.http import HttpResponseForbidden
+
+def librarian_view(request):
+    if not request.user.is_authenticated or request.user.userprofile.role != 'librarian':
+        return HttpResponseForbidden("You do not have permission to access this page.")
     return render(request, 'librarian_view.html', {'message': 'Welcome, Librarian!'})
 
 #Member view
-@user_passes_test(is_member)
-def Member(request):
+def member_view(request):
+    if not request.user.is_authenticated or request.user.userprofile.role != 'member':
+        return HttpResponseForbidden("You do not have permission to access this page.")
     return render(request, 'member_view.html', {'message': 'Welcome, Member!'})
 
 
