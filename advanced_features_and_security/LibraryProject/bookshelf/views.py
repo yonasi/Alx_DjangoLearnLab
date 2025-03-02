@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
 from .forms import BookForm
-from django.db.models import Q
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_protect
+from .forms import ExampleForm
 
 # Create your views here.
 
@@ -53,3 +55,20 @@ def book_delete(request, pk):
     return render(request, 'bookshelf/templates/bookshelf/book_confirm_delete.html', {'book': book})
 
 
+#security
+
+@csrf_protect  # Protects against CSRF attacks
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():# Process the data securely
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+                                                    # Save to database or send an email (example)
+            print(f"Name: {name}, Email: {email}, Message: {message}")
+            return redirect('book_list')  # Redirect to a success page
+    else:
+        form = ExampleForm()
+
+    return render(request, 'example_form.html', {'form': form})
