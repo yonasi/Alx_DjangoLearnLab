@@ -90,19 +90,19 @@ class RoleRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         except UserProfile.DoesNotExist:
             return False
 
-class AdminView(RoleRequiredMixin, View):
+class Admin(RoleRequiredMixin, View):
     role = 'Admin'
 
     def get(self, request, *args, **kwargs):
         return render(request, 'admin_page.html')
 
-class LibrarianView(RoleRequiredMixin, View):
+class Librarian(RoleRequiredMixin, View):
     role = 'Librarian'
 
     def get(self, request, *args, **kwargs):
         return render(request, 'librarian_page.html')
 
-class MemberView(RoleRequiredMixin, View):
+class Member(RoleRequiredMixin, View):
     role = 'Member'
 
     def get(self, request, *args, **kwargs):
