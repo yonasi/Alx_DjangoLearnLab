@@ -61,17 +61,17 @@ def is_member(user):
 
 #Admin view
 @user_passes_test(is_admin)
-def Admin_view(request):
+def Admin(request):
     return render(request, 'admin_view.html', {'message': 'Welcome, Admin!'})
 
 #Librarian view
 @user_passes_test(is_librarian)
-def Librarian_view(request):
+def Librarian(request):
     return render(request, 'librarian_view.html', {'message': 'Welcome, Librarian!'})
 
 #Member view
 @user_passes_test(is_member)
-def Member_view(request):
+def Member(request):
     return render(request, 'member_view.html', {'message': 'Welcome, Member!'})
 
 
