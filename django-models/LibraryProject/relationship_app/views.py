@@ -60,21 +60,18 @@ def is_member(user):
         return False
 
 #Admin view
+Admin@user_passes_test(is_admin)
 def Admin(request):
-    if not request.user.is_authenticated or request.user.userprofile.role != 'admin':
-        return HttpResponseForbidden("You do not have permission to access this page.")
     return render(request, 'admin_view.html', {'message': 'Welcome, Admin!'})
 
 #Librarian view
+@user_passes_test(is_librarian)
 def Librarian(request):
-    if not request.user.is_authenticated or request.user.userprofile.role != 'librarian':
-        return HttpResponseForbidden("You do not have permission to access this page.")
     return render(request, 'librarian_view.html', {'message': 'Welcome, Librarian!'})
 
 #Member view
-def Member(request):
-    if not request.user.is_authenticated or request.user.userprofile.role != 'member':
-        return HttpResponseForbidden("You do not have permission to access this page.")
+@user_passes_test(is_member)
+def member_view(request):
     return render(request, 'member_view.html', {'message': 'Welcome, Member!'})
 
 
