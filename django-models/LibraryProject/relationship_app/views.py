@@ -63,17 +63,17 @@ def is_member(user):
 
 @login_required
 @user_passes_test(is_admin)
-def admi(request):
+def Admin(request):
     return render(request, 'admin_view.html')
 
 @login_required
 @user_passes_test(is_librarian)
-def librarian_view(request):
+def Librarian(request):
     return render(request, 'librarian_view.html')
 
 @login_required
 @user_passes_test(is_member)
-def member_view(request):
+def Member(request):
     return render(request, 'member_view.html')
 
 
