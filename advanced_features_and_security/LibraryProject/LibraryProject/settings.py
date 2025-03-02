@@ -15,12 +15,31 @@ import os
 
 
 # Security settings
-SECURE_BROWSER_XSS_FILTER = True
+SECURE_BROWSER_XSS_FILTER = True 
 X_FRAME_OPTIONS = 'DENY'  # Or 'SAMEORIGIN' if needed
 SECURE_CONTENT_TYPE_NOSNIFF = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True  # Force HTTPS
+
+
+# HTTPS settings
+SECURE_SSL_REDIRECT = True # This setting forces all HTTP requests to be redirected to HTTPS.
+SECURE_HSTS_SECONDS = 31536000  # HTTP Strict Transport Security (HSTS), One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # This ensures that HSTS applies to all subdomains of your site.
+SECURE_HSTS_PRELOAD = True # This allows your site to be included in the HSTS preload list, 
+                           # which is distributed with browsers.
+
+SESSION_COOKIE_SECURE = True #This setting ensures that the session cookie is only sent over HTTPS.
+CSRF_COOKIE_SECURE = True    # This setting ensures that the CSRF cookie is only sent over HTTPS.
+
+
+# secure headers
+
+X_FRAME_OPTIONS = 'DENY'  # prevents your site from being embedded in iframes
+SECURE_CONTENT_TYPE_NOSNIFF = True #prevents browsers from MIME-sniffing responses, mitigating the risk of malicious content being executed.
+SECURE_BROWSER_XSS_FILTER = True   #enables the browser's built-in XSS filter.
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
