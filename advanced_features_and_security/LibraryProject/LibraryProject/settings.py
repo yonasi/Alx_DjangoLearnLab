@@ -39,7 +39,8 @@ X_FRAME_OPTIONS = 'DENY'  # prevents your site from being embedded in iframes
 SECURE_CONTENT_TYPE_NOSNIFF = True #prevents browsers from MIME-sniffing responses, mitigating the risk of malicious content being executed.
 SECURE_BROWSER_XSS_FILTER = True   #enables the browser's built-in XSS filter.
 
-
+# Proxy settings (only use with trusted proxies)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
