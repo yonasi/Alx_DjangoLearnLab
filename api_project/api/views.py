@@ -14,8 +14,12 @@ class BookList(generics.ListAPIView):
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
+# task 3 permissions
+from rest_framework import permissions
+from rest_framework import authentication
 class BookViewSet(viewsets.ModelViewSet):
-    
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.TokenAuthentication, authentication.SessionAuthentication]
     def list(self, request):
         queryset = Book.objects.all()
         serializer_class = BookSerializer(queryset, many=True)
