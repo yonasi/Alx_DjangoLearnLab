@@ -18,7 +18,7 @@ from rest_framework import status
 from rest_framework import permissions
 from rest_framework import authentication
 class BookViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # IsAuthenticatedOrReadOnly is set as default permission, all api endpoints will require authentication.
     authentication_classes = [authentication.TokenAuthentication, authentication.SessionAuthentication]
     def list(self, request):
         queryset = Book.objects.all()
