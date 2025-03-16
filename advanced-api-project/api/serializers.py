@@ -16,7 +16,7 @@ class BookSerializer(serializers.ModelSerializer):
                                                                                            # current year if the conditions are right it returns the value(publication_year)
         return value
 
-class Authorserilizer(serializers.ModelSerializer):
+class AuthorSerializer(serializers.ModelSerializer):
     books = BookSerializer(many=True, read_only=True)
 
     class Meta:
