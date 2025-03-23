@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{%block title%}<h2>All Posts</h2>{%endblock%}
+{% block content %}
+  
+{% block content %}
+  <h2>All Posts</h2>
+  {% for post in posts %}
+    <div>
+      <h3><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h3>
+      <p>Published: {{ post.published_date }}</p>
+      <p>Author: {{ post.author }}</p>
+      <p>{{ post.content|truncatewords:50 }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}
