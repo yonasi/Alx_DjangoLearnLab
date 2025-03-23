@@ -33,4 +33,16 @@ class CommentForm(forms.ModelForm):
             raise forms.ValidationError("Comment is too long (max 5500 characters).")
 
         return content
+    
+
+# task 4
+from .models import Post
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'tags'] #Include tags
+
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+        }
 

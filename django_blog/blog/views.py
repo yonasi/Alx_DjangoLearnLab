@@ -100,21 +100,34 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 # task 3
 from .models import Comment
 from .forms import CommentForm
-def post_detail(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    comments = post.comments.all()
-    form = CommentForm()  # Create an empty form instance
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user if request.user.is_authenticated else None
-            comment.save()
-            return redirect('comment_detail', post_id=post_id)
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_create.html' #Create this template.
 
-    context = {'post': post, 'comments': comments, 'form': form}
-    return render(request, 'blog/comment_detail.html', context)
+    def form_valid(self, form):
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_id'])
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'post_id': self.kwargs['post_id']})
+    
+    def post_detail(request, post_id):
+        post = get_object_or_404(Post, pk=post_id)
+        comments = post.comments.all()
+        form = CommentForm()  # Create an empty form instance
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.author = request.user if request.user.is_authenticated else None
+                comment.save()
+                return redirect('comment_detail', post_id=post_id)
+
+        context = {'post': post, 'comments': comments, 'form': form}
+        return render(request, 'blog/comment_detail.html', context)
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
