@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 #task 4
 from taggit.managers import TaggableManager
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()

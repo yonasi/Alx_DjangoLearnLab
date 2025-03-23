@@ -37,12 +37,12 @@ class CommentForm(forms.ModelForm):
 
 # task 4
 from .models import Post
+from taggit.forms import TagWidget
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'tags'] #Include tags
-
+        fields = ['title', 'content', 'tags']
         widgets = {
             'content': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+            'tags': TagWidget(), #Use TagWidget
         }
-
