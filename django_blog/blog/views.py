@@ -151,3 +151,28 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+    
+
+
+# task 4, search functionality
+from django.db.models import Q
+
+def post_search(request):
+    query = request.GET.get('q')  # Get the search query from the request
+
+    if query:
+        # Use Q objects to combine multiple filters with OR logic
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(tags__name__icontains=query) |
+            Q(content__icontains=query)
+        ).distinct()  # Use distinct() to avoid duplicate results
+
+    else:
+        results = Post.objects.all()  # If no query, show all posts
+
+    context = {
+        'results': results,
+        'query': query, #pass the query to the template so it can display it
+    }
+    return render(request, 'search_results.html', context)

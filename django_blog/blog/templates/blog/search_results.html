@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    {% if query %}
+        <h2>Results for "{{ query }}"</h2>
+    {% endif %}
+    {% if results %}
+        <ul>
+            {% for post in results %}
+                <li>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content|truncatewords:50 }}</p>
+                    <p>Tags: {% for tag in post.tags.all %} {{tag.name}} {% if not forloop.last %}, {% endif %} {% endfor %}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+    <form method="get" action="{% url 'post_search' %}">
+        <input type="text" name="q" placeholder="Search posts...">
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>
