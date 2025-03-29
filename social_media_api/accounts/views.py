@@ -10,11 +10,11 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 
-User = get_user_model()
+CustomUser = get_user_model()
 
 #start task 0
 class UsersRegistrationView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UsersRegistrationSerializer
     permission_classes = [permissions.AllowAny]
 
