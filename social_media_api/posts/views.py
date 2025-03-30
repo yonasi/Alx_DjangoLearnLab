@@ -116,9 +116,8 @@ class LikeToggleView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)
-        like_exists = Like.objects.filter(post=post, user=request.user).exists()
-
+        post = generics.get_object_or_404(Post, pk=pk)
+        like_exists = Like.objects.get_or_create(user=request.user, post=post)
         if like_exists:
             Like.objects.filter(post=post, user=request.user).delete()
             return Response({"detail": "Post unliked."}, status=status.HTTP_200_OK)
