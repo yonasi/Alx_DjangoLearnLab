@@ -27,7 +27,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
-
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY' 
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # Only set to True if you are using HTTPS
+SESSION_COOKIE_SECURE = True  # Ensures cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True 
 
 AUTH_USER_MODEL = 'accounts.Customuser'
 
