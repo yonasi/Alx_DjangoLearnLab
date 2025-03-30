@@ -3,9 +3,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
-from .models import Post, Comment
+from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer
-from .permissions import IsAuthorOrReadOnly  # Create this file
+from .permissions import IsAuthorOrReadOnly 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 
@@ -15,7 +15,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['author__id']  # Example: filter posts by author ID
+    filterset_fields = ['author__id'] 
     search_fields = ['title', 'content']
     ordering_fields = ['created_at', 'updated_at', 'title']
 
@@ -32,10 +32,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 #end task 1
 
 #start task 2
-from .models import Post, Comment
-from .serializers import PostSerializer, CommentSerializer
-from .permissions import IsAuthorOrReadOnly
-
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -72,16 +68,9 @@ class FeedView(generics.ListAPIView):
 
     #start task 3
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-
-from .models import Post, Comment, Like
-from .serializers import PostSerializer, CommentSerializer, LikeSerializer
-from .permissions import IsAuthorOrReadOnly
 from notifications.models import Notification
 from rest_framework.views import APIView
 
